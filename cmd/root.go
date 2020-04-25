@@ -17,12 +17,17 @@ package cmd
 
 import (
   "fmt"
-  "os"
+  "github.com/akoserwal/operator-sdk-manager/cmd/install"
+  "github.com/akoserwal/operator-sdk-manager/cmd/list"
+  "github.com/akoserwal/operator-sdk-manager/cmd/search"
+  "github.com/akoserwal/operator-sdk-manager/cmd/set"
+  "github.com/akoserwal/operator-sdk-manager/cmd/uninstall"
+  "github.com/akoserwal/operator-sdk-manager/cmd/version"
+  genutil "github.com/akoserwal/operator-sdk-manager/cmd/internal"
   "github.com/spf13/cobra"
-
-  homedir "github.com/mitchellh/go-homedir"
   "github.com/spf13/viper"
-
+  "os"
+  "path/filepath"
 )
 
 
@@ -41,10 +46,32 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
+
+  rootCmd.AddCommand(
+    install.NewCmd(),
+    version.NewCmd(),
+    list.NewCmd(),
+    uninstall.NewCmd(),
+    set.NewCmd(),
+    search.NewCmd(),
+    )
+
+  createOpSdkMgmrDir()
+
   if err := rootCmd.Execute(); err != nil {
     fmt.Println(err)
     os.Exit(1)
   }
+}
+
+func createOpSdkMgmrDir() {
+  home :=  genutil.GetHomeDir()
+  const path = ".operator-sdk-manager/versions"
+  opSdkMgmrPath := filepath.Join(home, path)
+  if _, err := os.Stat(opSdkMgmrPath); os.IsNotExist(err) {
+    os.MkdirAll(opSdkMgmrPath, os.ModePerm)
+  }
+
 }
 
 func init() {
@@ -54,7 +81,7 @@ func init() {
   // Cobra supports persistent flags, which, if defined here,
   // will be global for your application.
 
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.operator-sdk-manager.yaml)")
+  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.operator-sdk-manager/config.yaml)")
 
 
   // Cobra also supports local flags, which will only run
@@ -70,15 +97,12 @@ func initConfig() {
     viper.SetConfigFile(cfgFile)
   } else {
     // Find home directory.
-    home, err := homedir.Dir()
-    if err != nil {
-      fmt.Println(err)
-      os.Exit(1)
-    }
-
+    home := genutil.GetHomeDir()
+    const path = ".operator-sdk-manager"
+    opSdkMgmrPath := filepath.Join(home, path)
     // Search config in home directory with name ".operator-sdk-manager" (without extension).
-    viper.AddConfigPath(home)
-    viper.SetConfigName(".operator-sdk-manager")
+    viper.AddConfigPath(opSdkMgmrPath)
+    viper.SetConfigName("config")
   }
 
   viper.AutomaticEnv() // read in environment variables that match
