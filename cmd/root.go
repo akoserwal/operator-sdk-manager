@@ -66,7 +66,7 @@ func Execute() {
 
 func createOpSdkMgmrDir() {
   home :=  genutil.GetHomeDir()
-  const path = ".operator-sdk-manager/versions"
+  const path = ".osm/versions"
   opSdkMgmrPath := filepath.Join(home, path)
   if _, err := os.Stat(opSdkMgmrPath); os.IsNotExist(err) {
     os.MkdirAll(opSdkMgmrPath, os.ModePerm)
@@ -81,7 +81,7 @@ func init() {
   // Cobra supports persistent flags, which, if defined here,
   // will be global for your application.
 
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.operator-sdk-manager/config.yaml)")
+  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.osm/config.yaml)")
 
 
   // Cobra also supports local flags, which will only run
@@ -98,9 +98,9 @@ func initConfig() {
   } else {
     // Find home directory.
     home := genutil.GetHomeDir()
-    const path = ".operator-sdk-manager"
+    const path = ".osm"
     opSdkMgmrPath := filepath.Join(home, path)
-    // Search config in home directory with name ".operator-sdk-manager" (without extension).
+    // Search config in home directory with name ".osm" (without extension).
     viper.AddConfigPath(opSdkMgmrPath)
     viper.SetConfigName("config")
   }

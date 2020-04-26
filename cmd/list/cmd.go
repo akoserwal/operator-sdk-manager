@@ -25,6 +25,9 @@ func listInstalledOperators(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if len(files) == 0 {
+		fmt.Println("No version is installed")
+	}
 
 	for _, f := range files {
 		fmt.Println(f.Name())

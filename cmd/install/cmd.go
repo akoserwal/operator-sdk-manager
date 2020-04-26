@@ -3,11 +3,11 @@ package install
 import (
 	"fmt"
 	genutil "github.com/akoserwal/operator-sdk-manager/cmd/internal"
+	"github.com/akoserwal/operator-sdk-manager/cmd/search"
 	"github.com/spf13/cobra"
 	"io"
 	"net/http"
 	"os"
-	"path/filepath"
 	"runtime"
 	"strings"
 )
@@ -39,16 +39,21 @@ func installOperatorSdk(cmd *cobra.Command, args []string) error {
 	osType := runtime.GOOS
 	if len(args) > 0 {
 		version := args[0]
-		if version != "" {
-			if osType == "darwin" {
-				url := OPERATOR_SKD_URL + version + "/" + OPERATOR_SDK + version + DARWIN_URI_PREFIX
-				downloadOperatorSdk(url)
+		_, response := search.GetReleaseByTag(version)
+		if response.StatusCode == 200 {
 
-			} else if osType == "linux" {
-				url := OPERATOR_SKD_URL + version + "/" + OPERATOR_SDK + version + LINUX_URI_PREFIX
-				downloadOperatorSdk(url)
+			if version != "" {
+				if osType == "darwin" {
+					url := OPERATOR_SKD_URL + version + "/" + OPERATOR_SDK + version + DARWIN_URI_PREFIX
+					downloadOperatorSdk(url)
+
+				} else if osType == "linux" {
+					url := OPERATOR_SKD_URL + version + "/" + OPERATOR_SDK + version + LINUX_URI_PREFIX
+					downloadOperatorSdk(url)
+				}
 			}
 		}
+
 	} else {
 		fmt.Println("Version number should be provider like: operator-sdk-manager install V0.17.0")
 	}
@@ -59,9 +64,9 @@ func installOperatorSdk(cmd *cobra.Command, args []string) error {
 func downloadOperatorSdk(url string) {
 	tokens := strings.Split(url, "/")
 	version := tokens[len(tokens)-2]
-	opSdkFileName := tokens[len(tokens)-1]
+	opSdkFileName := "operator-sdk"
 
-	opSdkMgmrPath := getOpSdkManagerVersionPath(version)
+	opSdkMgmrPath := genutil.GetOpSdkManagerVersionPath(version)
 	os.MkdirAll(opSdkMgmrPath, os.ModePerm)
 	os.Chdir(opSdkMgmrPath)
 
@@ -92,12 +97,6 @@ func downloadOperatorSdk(url string) {
 	} else {
 		fmt.Println("Version " + version + " is already downloaded")
 	}
-}
-
-func getOpSdkManagerVersionPath(version string) string {
-	home := genutil.GetHomeDir()
-	opSdkMgmrPath := filepath.Join(home, ".operator-sdk-manager/versions/"+version)
-	return opSdkMgmrPath
 }
 
 

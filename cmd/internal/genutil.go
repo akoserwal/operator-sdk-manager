@@ -18,6 +18,12 @@ func GetHomeDir() string {
 
 func GetOpSdkManagerPath() string {
 	home := GetHomeDir()
-	opSdkMgmrPath := filepath.Join(home, ".operator-sdk-manager/versions/")
+	opSdkMgmrPath := filepath.Join(home, ".osm/versions/")
+	return opSdkMgmrPath
+}
+
+func GetOpSdkManagerVersionPath(version string) string {
+	home := GetHomeDir()
+	opSdkMgmrPath := filepath.Join(home, ".osm/versions/", version)
 	return opSdkMgmrPath
 }
