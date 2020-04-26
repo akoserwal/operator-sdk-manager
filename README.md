@@ -1,4 +1,4 @@
-#Operator SDK Manager
+# Operator SDK Manager
 
 Version Manager for operator-sdk
 
