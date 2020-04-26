@@ -21,7 +21,7 @@ var (
 func NewCmd() *cobra.Command {
 	searchCMD := &cobra.Command{
 		Use:   "search",
-		Short: "search avaliable version",
+		Short: "search available version",
 		Long:  "",
 		RunE:SearchVersions,
 	}
