@@ -8,6 +8,20 @@ This project is used for managing multiple version of operator-sdk cli tool. It 
 ``
   operator-sdk-manager [command]
 ``
+### Example
+
+ ```
+   //Dowloading version v0.17.0
+   $operator-sdk-manager install v0.17.0
+   
+   //Setting version v0.17.0
+   $operator-sdk-manager set v0.17.0
+   
+   //Run operator-sdk
+   $operator-sdk version 
+   > operator-sdk version: "v0.17.0"
+ ```
+ 
 
 ## Install the Operator SDK Manager CLI
 Installation guide: [install-operator-sdk-manage](doc/install-operator-sdk-manager.md)
