@@ -27,3 +27,12 @@ func GetOpSdkManagerVersionPath(version string) string {
 	opSdkMgmrPath := filepath.Join(home, ".osm/versions/", version)
 	return opSdkMgmrPath
 }
+
+func IsOperatorAvailable(opSdkVersion string) bool {
+	if _, err := os.Stat(opSdkVersion); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
+}

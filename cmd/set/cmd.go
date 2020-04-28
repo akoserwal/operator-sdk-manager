@@ -32,28 +32,23 @@ func SetOperatorSdk(cmd *cobra.Command, args []string) error {
 		opSdkVersionPath := genutil.GetOpSdkManagerVersionPath(version)
 		opSdkVersion := filepath.Join(opSdkVersionPath, "operator-sdk")
 
-		isOperatorAvailable(opSdkVersion)
+		if genutil.IsOperatorAvailable(opSdkVersion) == true {
+			if _, err := os.Lstat(defaultPath); err == nil {
+				os.Remove(defaultPath)
+			}
 
-		if _, err := os.Lstat(defaultPath); err == nil {
-			os.Remove(defaultPath)
+			err := os.Symlink(opSdkVersion, defaultPath)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			fmt.Println("Version is not available")
 		}
 
-		err := os.Symlink(opSdkVersion, defaultPath)
-		if err != nil {
-			log.Fatal(err)
-		}
+
 	} else {
 		fmt.Print("Specific version to set like: operator-sdk-manager set v0.17.0")
 	}
 
 	return nil
-}
-
-func isOperatorAvailable(opSdkVersion string) bool {
-	if _, err := os.Stat(opSdkVersion); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
 }
