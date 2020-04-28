@@ -28,17 +28,17 @@ func NewCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "install",
 		Short: "install version of operator-sdk",
-		Long:  "",
-		RunE:  installOperatorSdk,
+		Long:  "operator-sdk-manager install v0.17.0",
+		RunE:  InstallOperatorSdk,
 	}
 
 	return cmd
 }
 
-func installOperatorSdk(cmd *cobra.Command, args []string) error {
+func InstallOperatorSdk(cmd *cobra.Command, args []string) error {
 	osType := runtime.GOOS
 	if len(args) > 0 {
-		version := args[0]
+		version := strings.ToLower(args[0])
 		_, response := search.GetReleaseByTag(version)
 		if response.StatusCode == 200 {
 
@@ -55,7 +55,7 @@ func installOperatorSdk(cmd *cobra.Command, args []string) error {
 		}
 
 	} else {
-		fmt.Println("Version number should be provider like: operator-sdk-manager install V0.17.0")
+		fmt.Println("Version number should be provider like: operator-sdk-manager install v0.17.0")
 	}
 
 	return nil

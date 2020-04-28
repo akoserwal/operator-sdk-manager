@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
@@ -26,17 +27,12 @@ func NewCmd() *cobra.Command {
 
 func SetOperatorSdk(cmd *cobra.Command, args []string) error {
 	if len(args) > 0 {
-		version := args[0]
+		version := strings.ToLower(args[0])
 		defaultPath := filepath.Join(DEFAULT_OPERATOR_SDK_PATH)
 		opSdkVersionPath := genutil.GetOpSdkManagerVersionPath(version)
 		opSdkVersion := filepath.Join(opSdkVersionPath, "operator-sdk")
 
-		if _, err := os.Stat(opSdkVersion); err != nil {
-			if os.IsNotExist(err) {
-				fmt.Println("Version is not available")
-				os.Exit(1)
-			}
-		}
+		isOperatorAvailable(opSdkVersion)
 
 		if _, err := os.Lstat(defaultPath); err == nil {
 			os.Remove(defaultPath)
@@ -51,4 +47,13 @@ func SetOperatorSdk(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+func isOperatorAvailable(opSdkVersion string) bool {
+	if _, err := os.Stat(opSdkVersion); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
 }

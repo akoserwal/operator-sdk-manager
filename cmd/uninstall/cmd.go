@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"log"
 	"os"
+	"strings"
 )
 
 func NewCmd() *cobra.Command {
@@ -21,7 +22,7 @@ func NewCmd() *cobra.Command {
 
 func removeOperatorVersion(cmd *cobra.Command, args []string)  error {
 	if len(args) > 0 {
-		version := args[0]
+		version := strings.ToLower(args[0])
 		opFilePath :=genutil.GetOpSdkManagerVersionPath(version)
 		if _, err := os.Stat(opFilePath); err != nil {
 			if os.IsNotExist(err) {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/google/go-github/v31/github"
 	"github.com/spf13/cobra"
+	"strings"
 )
 
 //https://api.github.com/repos/operator-framework/operator-sdk/releases
@@ -46,7 +47,7 @@ func ListAllVersions() error{
 
 func SearchVersions(cmd *cobra.Command, args []string) error{
 	if len(args) > 0 {
-		version := args[0]
+		version := strings.ToLower(args[0])
 		repos, response := GetReleaseByTag(version)
 		if response.StatusCode == 200 {
 			fmt.Println(*repos.Name)
