@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/google/go-github/v31/github"
 	"github.com/spf13/cobra"
+	"os"
 	"strings"
 )
 
@@ -66,6 +67,7 @@ func GetReleaseByTag(version string) (*github.RepositoryRelease, *github.Respons
 	repos, response, err := client.Repositories.GetReleaseByTag(context.Background(), "operator-framework", "operator-sdk", version)
 	if err != nil {
 		fmt.Println(version, "version not found")
+		os.Exit(1)
 	}
 	return repos, response
 }

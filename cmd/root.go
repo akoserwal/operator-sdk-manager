@@ -17,6 +17,7 @@ package cmd
 
 import (
   "fmt"
+  "github.com/akoserwal/operator-sdk-manager/cmd/diff"
   "github.com/akoserwal/operator-sdk-manager/cmd/install"
   "github.com/akoserwal/operator-sdk-manager/cmd/list"
   "github.com/akoserwal/operator-sdk-manager/cmd/search"
@@ -54,6 +55,7 @@ func Execute() {
     uninstall.NewCmd(),
     set.NewCmd(),
     search.NewCmd(),
+    diff.NewCmd(),
     )
 
   createOpSdkMgmrDir()
@@ -83,10 +85,6 @@ func init() {
 
   rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.osm/config.yaml)")
 
-
-  // Cobra also supports local flags, which will only run
-  // when this action is called directly.
-  rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 
