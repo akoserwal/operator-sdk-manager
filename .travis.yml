@@ -4,7 +4,6 @@ go:
 - 1.14.x
 script:
 - export GO111MODULE=on
-- "./pre-commit"
 - GOOS=darwin GOARCH=amd64 go build -o build/operator-sdk-manager-${TRAVIS_TAG}-x86_64-apple-darwin
 - GOOS=linux   GOARCH=amd64 go build -o build/operator-sdk-manager-${TRAVIS_TAG}-x86_64-linux-gnu
 before_deploy:
