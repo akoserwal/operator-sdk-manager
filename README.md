@@ -1,4 +1,6 @@
 # Operator SDK Manager & Golang
+![](https://travis-ci.com/akoserwal/operator-sdk-manager.svg?branch=master)
+
 Version Manager for operator-sdk & golang
 
 ## Overview
