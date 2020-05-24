@@ -59,7 +59,6 @@ func Execute() {
     )
 
   createOpSdkMgmrDir()
-
   if err := rootCmd.Execute(); err != nil {
     fmt.Println(err)
     os.Exit(1)
@@ -83,7 +82,7 @@ func init() {
   // Cobra supports persistent flags, which, if defined here,
   // will be global for your application.
 
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.osm/config.yaml)")
+  //rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.osm/config.yaml)")
 
 }
 

@@ -8,21 +8,20 @@ import (
 	"log"
 )
 
-func NewCmd() *cobra.Command {
+func GetGoVersionListCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list",
-		Short: "list all installed versions",
-		Long:  "operator-sdk-manager list",
-		RunE: listInstalledOperators,
+		Use:   "go",
+		Short: "operator-sdk-manager list go",
+		Long:  "operator-sdk-manager list go",
+		RunE:  getGoList,
 	}
 
-	cmd.AddCommand(GetGoVersionListCMD())
 	return cmd
 }
 
-func listInstalledOperators(cmd *cobra.Command, args []string) error {
-	opSdkMgmrPath := genutil.GetOpSdkManagerPath()
-	files, err := ioutil.ReadDir(opSdkMgmrPath)
+func getGoList(cmd *cobra.Command, args []string) error {
+	goInstallationPath := genutil.GetGoPath()
+	files, err := ioutil.ReadDir(goInstallationPath)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -32,6 +32,8 @@ func NewCmd() *cobra.Command {
 		RunE:  InstallOperatorSdk,
 	}
 
+	cmd.AddCommand(InstallGOCMD())
+
 	return cmd
 }
 

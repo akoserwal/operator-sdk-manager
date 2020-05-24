@@ -22,6 +22,8 @@ func NewCmd() *cobra.Command {
 		RunE:  SetOperatorSdk,
 	}
 
+	cmd.AddCommand(setGoVersionCMD())
+
 	return cmd
 }
 
