@@ -1,5 +1,5 @@
-# Operator SDK Manager
-Version Manager for operator-sdk
+# Operator SDK Manager & Golang
+Version Manager for operator-sdk & golang
 
 ## Overview
 This project is used for managing multiple version of operator-sdk cli tool. It allows to install & switch between versions
@@ -10,6 +10,7 @@ This project is used for managing multiple version of operator-sdk cli tool. It 
 ``
 ### Example
 
+# operator-sdk
  ```
    //Dowloading version v0.17.0
    $operator-sdk-manager install v0.17.0
@@ -22,6 +23,18 @@ This project is used for managing multiple version of operator-sdk cli tool. It 
    > operator-sdk version: "v0.17.0"
  ```
  
+# golang
+
+ ```
+   //Dowloading version golang 1.14.1
+   $operator-sdk-manager install go 1.14.1
+   
+   //Setting version 1.14.1
+   $operator-sdk-manager set go 1.14.1
+   
+   //check go version
+   $go version
+ ```
 
 ## Install the Operator SDK Manager CLI
 Installation guide: [install-operator-sdk-manage](doc/install-operator-sdk-manager.md)
