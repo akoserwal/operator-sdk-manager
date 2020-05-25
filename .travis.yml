@@ -4,7 +4,7 @@ go:
 - 1.14.x
 script:
 - export GO111MODULE=on
-- echo $tag_nam
+- echo $tag_name
 - GOOS=darwin GOARCH=amd64 go build -o build/operator-sdk-manager-x86_64-apple-darwin
 - GOOS=linux GOARCH=amd64 go build -o build/operator-sdk-manager-x86_64-linux-gnu
 before_deploy:
