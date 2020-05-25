@@ -12,7 +12,7 @@ deploy:
   file:
     - operator-sdk-manager-x86_64-apple-darwin
     - operator-sdk-manager-x86_64-linux-gnu
-  skip_cleanup: 'true'
+  skip_cleanup: true
   on:
     repo: akoserwal/operator-sdk-manager
     tags: true
