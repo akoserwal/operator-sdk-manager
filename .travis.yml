@@ -4,21 +4,17 @@ go:
 - 1.14.x
 script:
 - export GO111MODULE=on
-- GOOS=darwin GOARCH=amd64 go build -o build/operator-sdk-manager-${TRAVIS_TAG}-x86_64-apple-darwin
-- GOOS=linux   GOARCH=amd64 go build -o build/operator-sdk-manager-${TRAVIS_TAG}-x86_64-linux-gnu
+- GOOS=darwin GOARCH=amd64 go build -o build/operator-sdk-manager-x86_64-apple-darwin
+- GOOS=linux GOARCH=amd64 go build -o build/operator-sdk-manager-x86_64-linux-gnu
 before_deploy:
-- zip operator-sdk-manager-${TRAVIS_TAG}-x86_64-apple-darwin.zip operator-sdk-manager-${TRAVIS_TAG}-x86_64-apple-darwin
-  README.md
-- zip operator-sdk-manager-${TRAVIS_TAG}-x86_64-linux-gnu.zip operator-sdk-manager-${TRAVIS_TAG}-x86_64-linux-gnu
-  README.md
-- sha256sum *zip > SHASUMS256.txt
+- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
 deploy:
   provider: releases
   api_key:
     secure: umGE+vPumJ7vjYhZuCoH0bmTG07+qULon7TGsChqM93J1YOsGr4swb2Xzz+QqugxDVfFrrbCQFpOIHesqGvDLHmiapPRMl/TiREB53fLWA57tIShr51BSJ+fT9XP+0mHndlzmETdkJ3VgUeuQ4vJTcF2CwP+7lnkP8IWTzniY6uRLHloYWKnjTGSpm5MXothhC2gJS/Y7wdP87nbIoUHSEPJz0VURN4rrmmc7ishxJXR1bSwTTJnoR/7p3j93sYZOIJvwtOND9fk8y5ihv3IeeQOgIOXT48J7UXgPAJR6ypN1UbJRL+7CEnsaa5WnfX6/a+HWQ/8963taZ4UnRTm8/Ekr021wm6v1mkWpGm4tpIQNWemp1NXr7nJ3A1lszrJMQU5f+2KQuYSgeQmrSxE2Oq31oB68cGdjLQ+/Ubqay3r8jNAeltcmfhgWcgkWjT6M30ya+QWoFitSHUdUl5w3pcIUAggcIl+k6FtZOmq5dqZ4emHC1nNFfXOJa6jgKQRa5sMWDoV03e6A4FOR9XAPF55lQ7M7DFQ5HuONDWbvnBLLxocYvL5W8Z/eXSxA0zi7vlmcu/s8zriNNC5vNUsC3Lz6NMkr8hRwvYaYDGzmPPX5WK5FGZMBTlod9GuJgn+KAu9oY5EQx+RpoSKBCyVPHqWsz5Nx+MGJQyjco5o43U=
   file:
-    - operator-sdk-manager-${TRAVIS_TAG}-x86_64-apple-darwin.zip
-    - operator-sdk-manager-${TRAVIS_TAG}-x86_64-linux-gnu.zip
+    - operator-sdk-manager-x86_64-apple-darwin
+    - operator-sdk-manager-x86_64-linux-gnu
   on:
     repo: akoserwal/operator-sdk-manager
   skip_cleanup: 'true'
